@@ -11,15 +11,15 @@
   ],
   "ai": {
     "heading": "AI 與數位工具",
-    "body": "生成式 AI 實務應用（ChatGPT、Gemini、Claude、Midjourney、Suno）、建立客製化 Gemini Gem、與 AI 協作製作網頁小工具。",
-    "note": "＊以上為 AI 輔助的工作方法，非軟體工程專業。",
+    "body": "生成式 AI 實務應用 ChatGPT、Gemini、Claude、Midjourney、Suno等、建立客製化 Gemini Gem、與 AI 協作製作網頁工具。",
+    "note": "※ 持續自學相關知識",
     "works": [
       {
-        "label": "台灣鐵路捷運里程查詢（AI 協作網頁）",
+        "label": "台灣鐵路捷運里程查詢 - AI 協作作品",
         "url": "https://akira1989720.github.io/TW-Railway-km-calculator/"
       },
       {
-        "label": "Fujii Kaze 高雄場倒數（AI 協作網頁）",
+        "label": "Fujii Kaze 高雄場倒數 - AI 協作作品",
         "url": "https://akira1989720.github.io/fujii-kaze-kaohsiung-countdown/"
       }
     ]
@@ -27,20 +27,20 @@
   "software": [
     "Canva",
     "Adobe Photoshop",
-    "Lightroom",
+    "Adobe Lightroom",
     "PowerPoint",
     "Word",
     "Excel",
     "Airtable",
-    "Google 雲端",
+    "Google Drive",
     "Zoom",
     "Google Meet",
     "Microsoft Teams"
   ],
   "languages": [
     "中文（母語）",
-    "台語（流利）",
-    "英文（中等）",
+    "台語（精通）",
+    "英文（B2 level）",
     "日文（略懂）"
   ]
 }
