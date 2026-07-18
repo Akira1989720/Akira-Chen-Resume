@@ -1,0 +1,176 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# 後台上傳的圖片會存到這裡，網頁以 /assets/images/ 引用
+media_folder: "public/assets/images"
+public_folder: "/assets/images"
+
+locale: "zh_Hant"
+publish_mode: simple
+
+collections:
+  - name: "content"
+    label: "網站內容"
+    delete: false
+    editor:
+      preview: false
+    files:
+      # ---------- 首頁與基本 ----------
+      - name: "site"
+        label: "首頁・關於・頁尾・SEO"
+        file: "src/data/site.json"
+        fields:
+          - label: "SEO"
+            name: "seo"
+            widget: "object"
+            fields:
+              - { label: "瀏覽器標題 title", name: "title", widget: "string" }
+              - { label: "描述 description", name: "description", widget: "text" }
+              - { label: "分享圖 OG image", name: "ogImage", widget: "image", required: false }
+          - { label: "品牌中文", name: "brandZh", widget: "string" }
+          - { label: "品牌英文", name: "brandEn", widget: "string" }
+          - label: "Hero 首屏"
+            name: "hero"
+            widget: "object"
+            fields:
+              - { label: "側註（用 → 分隔）", name: "sidenote", widget: "string" }
+              - { label: "主標題", name: "heading", widget: "string" }
+              - { label: "姓名", name: "name", widget: "string" }
+              - { label: "定位（中）", name: "positionZh", widget: "string" }
+              - { label: "定位（英）", name: "positionEn", widget: "string" }
+              - { label: "簡介（可用 **粗體**）", name: "lede", widget: "text" }
+              - { label: "主要按鈕文字", name: "ctaPrimary", widget: "string" }
+              - { label: "次要按鈕文字", name: "ctaSecondary", widget: "string" }
+              - { label: "個人照", name: "portrait", widget: "image" }
+              - { label: "個人照替代文字 alt", name: "portraitAlt", widget: "string" }
+          - label: "About 關於"
+            name: "about"
+            widget: "object"
+            fields:
+              - { label: "第一段（可用 **粗體**）", name: "lede", widget: "text" }
+              - { label: "第二段", name: "para2", widget: "text" }
+              - { label: "職涯脈絡（每格一項）", name: "path", widget: "list", field: { label: "項目", name: "item", widget: "string" } }
+          - label: "頁尾"
+            name: "footer"
+            widget: "object"
+            fields:
+              - { label: "主題句", name: "motto", widget: "string" }
+              - { label: "版權", name: "copyright", widget: "string" }
+              - { label: "保密說明", name: "note", widget: "text" }
+
+      # ---------- 核心能力 ----------
+      - name: "capabilities"
+        label: "核心能力"
+        file: "src/data/capabilities.json"
+        fields:
+          - label: "能力清單"
+            name: "items"
+            widget: "list"
+            fields:
+              - { label: "編號", name: "num", widget: "string" }
+              - { label: "標題（問句）", name: "title", widget: "string" }
+              - { label: "內文（可用 **粗體**）", name: "body", widget: "text" }
+
+      # ---------- 精選專案 ----------
+      - name: "projects"
+        label: "精選專案"
+        file: "src/data/projects.json"
+        fields:
+          - label: "專案清單"
+            name: "items"
+            widget: "list"
+            fields:
+              - { label: "識別碼 id", name: "id", widget: "string" }
+              - { label: "單位", name: "org", widget: "string" }
+              - { label: "期間", name: "period", widget: "string" }
+              - { label: "角色標籤", name: "role", widget: "string" }
+              - { label: "專案名稱", name: "title", widget: "string" }
+              - { label: "專案圖片（留空則顯示待補佔位）", name: "image", widget: "image", required: false }
+              - { label: "圖片替代文字 alt", name: "imageAlt", widget: "string" }
+              - { label: "摘要", name: "summary", widget: "text" }
+              - { label: "我的角色（詳）", name: "roleDetail", widget: "string" }
+              - { label: "核心任務", name: "task", widget: "text" }
+              - { label: "執行範圍（每項一條，可用 **粗體**）", name: "scope", widget: "list", field: { label: "項目", name: "item", widget: "string" } }
+              - { label: "可驗證成果（可用 **粗體**）", name: "result", widget: "text" }
+
+      # ---------- 更多經歷 ----------
+      - name: "more"
+        label: "更多經歷"
+        file: "src/data/more.json"
+        fields:
+          - label: "經歷清單"
+            name: "items"
+            widget: "list"
+            fields:
+              - { label: "年份", name: "year", widget: "string" }
+              - { label: "標題", name: "title", widget: "string" }
+              - { label: "角色", name: "role", widget: "string" }
+              - { label: "內文", name: "body", widget: "text" }
+
+      # ---------- 工作經歷 ----------
+      - name: "experience"
+        label: "工作經歷（時間軸）"
+        file: "src/data/experience.json"
+        fields:
+          - label: "經歷清單"
+            name: "items"
+            widget: "list"
+            fields:
+              - { label: "年份", name: "year", widget: "string" }
+              - { label: "階段標題", name: "title", widget: "string" }
+              - { label: "單位・職稱", name: "org", widget: "string" }
+              - { label: "內文", name: "body", widget: "text" }
+
+      # ---------- 技能與工具 ----------
+      - name: "skills"
+        label: "技能與工具"
+        file: "src/data/skills.json"
+        fields:
+          - label: "一般技能組"
+            name: "groups"
+            widget: "list"
+            fields:
+              - { label: "分組標題", name: "heading", widget: "string" }
+              - { label: "內容", name: "body", widget: "text" }
+          - label: "AI 與數位工具"
+            name: "ai"
+            widget: "object"
+            fields:
+              - { label: "分組標題", name: "heading", widget: "string" }
+              - { label: "內容", name: "body", widget: "text" }
+              - { label: "附註", name: "note", widget: "string" }
+              - label: "作品連結"
+                name: "works"
+                widget: "list"
+                fields:
+                  - { label: "名稱", name: "label", widget: "string" }
+                  - { label: "網址", name: "url", widget: "string" }
+          - { label: "常用軟體（每格一項）", name: "software", widget: "list", field: { label: "項目", name: "item", widget: "string" } }
+          - { label: "語言能力（每格一項）", name: "languages", widget: "list", field: { label: "項目", name: "item", widget: "string" } }
+
+      # ---------- 教育與培訓 ----------
+      - name: "education"
+        label: "教育與培訓"
+        file: "src/data/education.json"
+        fields:
+          - label: "清單"
+            name: "items"
+            widget: "list"
+            fields:
+              - { label: "年份", name: "year", widget: "string" }
+              - { label: "標題", name: "title", widget: "string" }
+              - { label: "補充（可留空）", name: "sub", widget: "string", required: false }
+
+      # ---------- 聯絡 ----------
+      - name: "contact"
+        label: "聯絡"
+        file: "src/data/contact.json"
+        fields:
+          - { label: "邀請語", name: "lede", widget: "text" }
+          - { label: "補充說明", name: "sub", widget: "text" }
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "LinkedIn 網址", name: "linkedin", widget: "string" }
+          - { label: "LinkedIn 顯示文字", name: "linkedinLabel", widget: "string" }
+          - { label: "履歷 PDF（上傳後自動接上下載鈕）", name: "resume", widget: "file", required: false }
+          - { label: "關注方向（每格一項）", name: "focus", widget: "list", field: { label: "項目", name: "item", widget: "string" } }

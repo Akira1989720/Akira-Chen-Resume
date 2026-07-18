@@ -1,0 +1,36 @@
+{
+  "seo": {
+    "title": "陳家輝 Chia-Huei Chen｜議題溝通與專案執行企劃",
+    "description": "陳家輝（Chia-Huei Chen），橫跨出版、文化行銷與環境倡議的專案企劃。專長為議題溝通、專案全流程執行、團隊培訓與生成式 AI 應用。從企劃到落地，讓值得做的事真的發生。",
+    "ogImage": "/assets/images/og-image.png"
+  },
+  "brandZh": "陳家輝",
+  "brandEn": "CHIA-HUEI CHEN",
+  "hero": {
+    "sidenote": "台南玉井 → 台北",
+    "heading": "從企劃到落地，我在意細節中的價值實踐。",
+    "name": "陳家輝 Chia-Huei Chen",
+    "positionZh": "議題溝通與專案執行",
+    "positionEn": "Project Planner — Content, Engagement & Training",
+    "lede": "**十年以上**的職涯橫跨出版、文化與環境倡議，我在意的不只是把企劃寫好，而是**負責讓它一路走到結案**。",
+    "ctaPrimary": "查看精選專案",
+    "ctaSecondary": "聯絡我",
+    "portrait": "/assets/images/portrait.jpg",
+    "portraitAlt": "陳家輝於山頂手持三角點標示石的照片，戴漁夫帽、穿芥黃色上衣，背景為高山雲景"
+  },
+  "about": {
+    "lede": "我來自台南玉井，念的是國文系，從出版編輯入行，之後做過文化行銷、環境募款與教育培訓。這些看似不相干的經歷，其實都在回答同一個問題：**一個重要的訊息，要怎麼被對的人聽見、並且真的產生行動**。",
+    "para2": "我習慣同時管理多條進度、把風險想在前面，也重視把專案收尾做好——結案報告、請款與物資盤點，這些環節往往決定一個專案能不能真正完成。比起企劃案好不好看，我更在意它能不能和團隊一起被執行出來。",
+    "path": [
+      "出版編輯",
+      "文化行銷",
+      "教育培訓",
+      "環境倡議"
+    ]
+  },
+  "footer": {
+    "motto": "「Be the change you want to see in the world.」",
+    "copyright": "© 2026 陳家輝 Chia-Huei Chen",
+    "note": "本站內容以個人職涯經歷為主，專案細節依委託單位保密規範呈現。"
+  }
+}

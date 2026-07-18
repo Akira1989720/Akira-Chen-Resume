@@ -1,0 +1,46 @@
+{
+  "groups": [
+    {
+      "heading": "企劃與內容",
+      "body": "活動企劃與執行、文案撰寫、內容規劃、政府標案服務建議書、刊物編輯、簡報與講綱撰寫、活動攝影與初階影像編輯。"
+    },
+    {
+      "heading": "執行與管理",
+      "body": "專案全流程（發想 → 預算 → 議價 → 現場 → 結案）、KPI 制定與績效檢核、團隊培訓與帶領、活動現場動線與風險管理、物資與後勤調度、跨部門與國際協作。"
+    }
+  ],
+  "ai": {
+    "heading": "AI 與數位工具",
+    "body": "生成式 AI 實務應用（ChatGPT、Gemini、Claude、Midjourney、Suno）、建立客製化 Gemini Gem、與 AI 協作製作網頁小工具。",
+    "note": "＊以上為 AI 輔助的工作方法，非軟體工程專業。",
+    "works": [
+      {
+        "label": "台灣鐵路捷運里程查詢（AI 協作網頁）",
+        "url": "https://akira1989720.github.io/TW-Railway-km-calculator/"
+      },
+      {
+        "label": "Fujii Kaze 高雄場倒數（AI 協作網頁）",
+        "url": "https://akira1989720.github.io/fujii-kaze-kaohsiung-countdown/"
+      }
+    ]
+  },
+  "software": [
+    "Canva",
+    "Adobe Photoshop",
+    "Lightroom",
+    "PowerPoint",
+    "Word",
+    "Excel",
+    "Airtable",
+    "Google 雲端",
+    "Zoom",
+    "Google Meet",
+    "Microsoft Teams"
+  ],
+  "languages": [
+    "中文（母語）",
+    "台語（流利）",
+    "英文（中等）",
+    "日文（略懂）"
+  ]
+}

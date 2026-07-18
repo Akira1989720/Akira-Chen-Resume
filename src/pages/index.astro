@@ -1,0 +1,250 @@
+---
+import Base from '../layouts/Base.astro';
+import { inline } from '../lib/inline.js';
+import site from '../data/site.json';
+import capabilitiesData from '../data/capabilities.json';
+const capabilities = capabilitiesData.items;
+import projectsData from '../data/projects.json';
+const projects = projectsData.items;
+import moreData from '../data/more.json';
+const more = moreData.items;
+import experienceData from '../data/experience.json';
+const experience = experienceData.items;
+import skills from '../data/skills.json';
+import educationData from '../data/education.json';
+const education = educationData.items;
+import contact from '../data/contact.json';
+const { hero, about, footer, brandZh, brandEn } = site;
+---
+<Base>
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#hero" aria-label="陳家輝 首頁">{brandZh}<span class="en">{brandEn}</span></a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks">選單 ＋</button>
+    <nav class="nav-links" id="navLinks" aria-label="主要導覽">
+      <a class="navlink" href="#about">關於<small>About</small></a>
+      <a class="navlink" href="#capabilities">能力<small>Capabilities</small></a>
+      <a class="navlink" href="#projects">專案<small>Projects</small></a>
+      <a class="navlink" href="#experience">經歷<small>Experience</small></a>
+      <a class="navlink" href="#skills">技能<small>Skills</small></a>
+      <a class="navlink" href="#contact">聯絡<small>Contact</small></a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <!-- HERO -->
+  <section id="hero" class="hero" style="border-top:none;">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <p class="sidenote">{hero.sidenote.split('→')[0]}<span class="arrow">→</span>{hero.sidenote.split('→')[1]}</p>
+          <h1 class="reveal">{hero.heading}</h1>
+          <p class="hero-name reveal">{hero.name}</p>
+          <div class="position reveal">
+            <div class="zh">{hero.positionZh}</div>
+            <div class="en">{hero.positionEn}</div>
+          </div>
+          <p class="hero-lede reveal" set:html={inline(hero.lede)}></p>
+          <div class="cta-row reveal">
+            <a class="btn btn-primary" href="#projects">{hero.ctaPrimary}</a>
+            <a class="btn btn-ghost" href="#contact">{hero.ctaSecondary}</a>
+            {contact.resume
+              ? <a class="btn btn-plain" href={contact.resume} target="_blank" rel="noopener noreferrer">履歷下載 <span class="tag">PDF</span></a>
+              : <a class="btn btn-plain" href="#" id="resumeBtn" aria-label="下載履歷（檔案待補）">履歷下載 <span class="tag">PDF・待補</span></a>}
+          </div>
+        </div>
+        <figure class="hero-portrait-fig reveal" style="margin:0;">
+          <img class="hero-portrait-img" src={hero.portrait} width="412" height="515" alt={hero.portraitAlt} loading="eager" decoding="async" />
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="wrap">
+      <h2 class="eyebrow">About ／ 關於</h2>
+      <div class="prose">
+        <p class="lede" set:html={inline(about.lede)}></p>
+        <p style="margin-top:1.4em;">{about.para2}</p>
+      </div>
+      <p class="path" aria-label="職涯脈絡">
+        {about.path.map((n, i) => (
+          <>
+            <span class="node">{n}</span>
+            {i < about.path.length - 1 && <span class="sep">→</span>}
+          </>
+        ))}
+      </p>
+    </div>
+  </section>
+
+  <!-- CAPABILITIES -->
+  <section id="capabilities">
+    <div class="wrap">
+      <h2 class="eyebrow">Capabilities ／ 我能解決的問題</h2>
+      <div class="caps">
+        {capabilities.map((c) => (
+          <article class="cap">
+            <div class="cap-num">{c.num}</div>
+            <div>
+              <h3>{c.title}</h3>
+              <p set:html={inline(c.body)}></p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- SELECTED PROJECTS -->
+  <section id="projects">
+    <div class="wrap">
+      <h2 class="eyebrow">Selected Projects ／ 精選專案</h2>
+      {projects.map((p) => (
+        <article class="proj reveal">
+          {p.image
+            ? <figure class="proj-media" style="margin:0;"><img src={p.image} width="1600" height="900" loading="lazy" decoding="async" alt={p.imageAlt} style="display:block;width:100%;height:100%;object-fit:cover;" /></figure>
+            : <div class="proj-media ph" role="img" aria-label={p.imageAlt + '（圖片待補）'}><span class="ph-label"><b>圖片待補</b>建議 16:9・原創現場照</span></div>}
+          <div class="proj-body">
+            <div class="proj-meta">
+              <span class="badge">{p.org}</span>
+              <span class="badge">{p.period}</span>
+              <span class="badge badge-role">{p.role}</span>
+            </div>
+            <h3>{p.title}</h3>
+            <p class="proj-summary">{p.summary}</p>
+            <details class="more">
+              <summary><span class="chev">▸</span> 展開背景、任務與成果</summary>
+              <div class="detail-grid">
+                <div class="dl"><h4>我的角色</h4><p>{p.roleDetail}</p></div>
+                <div class="dl"><h4>核心任務</h4><p>{p.task}</p></div>
+                <div class="dl dl-wide"><h4>執行範圍</h4>
+                  <ul>{p.scope.map((s) => <li set:html={inline(s)}></li>)}</ul>
+                </div>
+                <div class="dl dl-wide"><h4>可驗證成果</h4>
+                  <p class="result" set:html={inline(p.result)}></p>
+                </div>
+              </div>
+            </details>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- MORE EXPERIENCE -->
+  <section id="more">
+    <div class="wrap">
+      <h2 class="eyebrow">More Experience ／ 更多經歷</h2>
+      <div class="more-grid">
+        {more.map((m) => (
+          <article class="mx">
+            <div class="yr">{m.year}</div>
+            <div>
+              <h3>{m.title}</h3>
+              <div class="role">{m.role}</div>
+              <p>{m.body}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CAREER -->
+  <section id="experience">
+    <div class="wrap">
+      <h2 class="eyebrow">Career ／ 工作經歷</h2>
+      <div class="tl">
+        {experience.map((e) => (
+          <div class="tl-row">
+            <div class="tl-yr">{e.year}</div>
+            <div>
+              <h3 class="tl-title">{e.title}</h3>
+              <p class="tl-org">{e.org}</p>
+              <p>{e.body}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="wrap">
+      <h2 class="eyebrow">Skills &amp; Tools ／ 技能與工具</h2>
+      <div class="skills">
+        {skills.groups.map((g) => (
+          <div class="skill"><h3>{g.heading}</h3><p>{g.body}</p></div>
+        ))}
+        <div class="skill">
+          <h3>{skills.ai.heading}</h3>
+          <p>{skills.ai.body}</p>
+          <p class="note-inline">{skills.ai.note}</p>
+          {skills.ai.works.map((w) => (
+            <p class="work-link"><a href={w.url} target="_blank" rel="noopener noreferrer">作品 ↗ {w.label}</a></p>
+          ))}
+        </div>
+        <div class="skill">
+          <h3>常用軟體</h3>
+          <div class="chiprow">{skills.software.map((s) => <span class="chip">{s}</span>)}</div>
+        </div>
+        <div class="skill">
+          <h3>語言能力</h3>
+          <div class="chiprow">{skills.languages.map((s) => <span class="chip">{s}</span>)}</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="wrap">
+      <h2 class="eyebrow">Education &amp; Training ／ 教育與培訓</h2>
+      {education.map((ed) => (
+        <div class="edu-row">
+          <div class="yr">{ed.year}</div>
+          <div>
+            <h3 class="t">{ed.title}</h3>
+            {ed.sub && <div class="s">{ed.sub}</div>}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="wrap">
+      <h2 class="eyebrow">Contact ／ 聯絡</h2>
+      <p class="contact-lede">{contact.lede}</p>
+      <p class="contact-sub">{contact.sub}</p>
+      <div class="contact-list">
+        <div class="contact-item"><span class="k">Email</span><span class="v"><a href={'mailto:' + contact.email}>{contact.email}</a></span></div>
+        <div class="contact-item"><span class="k">LinkedIn</span><span class="v"><a href={contact.linkedin} target="_blank" rel="noopener noreferrer">{contact.linkedinLabel} ↗</a></span></div>
+        <div class="contact-item"><span class="k">履歷</span><span class="v">
+          {contact.resume
+            ? <a href={contact.resume} target="_blank" rel="noopener noreferrer">履歷下載</a>
+            : <><a href="#" id="resumeBtn2" aria-label="下載履歷（檔案待補）">履歷下載</a> <span class="note-inline" style="display:inline;">（PDF 待補）</span></>}
+        </span></div>
+      </div>
+      <div class="focus-areas" aria-label="關注的機會方向">
+        {contact.focus.map((f) => <span class="chip">{f}</span>)}
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <p class="foot-motto">{footer.motto}</p>
+    <div class="foot-meta">
+      <div class="cc">{footer.copyright}</div>
+      <div>{footer.note}</div>
+    </div>
+  </div>
+</footer>
+</Base>
