@@ -1,11 +1,6 @@
 {
   "items": [
     {
-      "year": "2007–2011",
-      "title": "國立彰化師範大學 國文學系 學士",
-      "sub": ""
-    },
-    {
       "year": "2021",
       "title": "倡議行動內訓 Basic Campaign Training",
       "sub": "綠色和平"
@@ -18,6 +13,11 @@
     {
       "year": "2021",
       "title": "Search Inside Yourself: Leadership Institute",
+      "sub": ""
+    },
+    {
+      "year": "2007–2011",
+      "title": "國立彰化師範大學 國文學系 學士",
       "sub": ""
     }
   ]
