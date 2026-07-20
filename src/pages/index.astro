@@ -142,10 +142,17 @@ const { hero, about, footer, brandZh, brandEn } = site;
         {more.map((m) => (
           <article class="mx">
             <div class="yr">{m.year}</div>
-            <div>
-              <h3>{m.title}</h3>
-              <div class="role">{m.role}</div>
-              <p>{m.body}</p>
+            <div class="mx-body">
+              <div class="mx-text">
+                <h3>{m.title}</h3>
+                <div class="role">{m.role}</div>
+                <p>{m.body}</p>
+              </div>
+              {m.image && (
+                <figure class="mx-fig">
+                  <img src={m.image} width="320" height="240" loading="lazy" decoding="async" alt={m.imageAlt || m.title} />
+                </figure>
+              )}
             </div>
           </article>
         ))}
