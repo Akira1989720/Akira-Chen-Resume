@@ -1,5 +1,5 @@
 /* ============================================================
-     設計代幣 — 編輯部 × 田野筆記
+     設計 — 編輯部 × 田野筆記
      紙感底 / 墨黑字 / 單一低彩度深松綠靛輔助色
      ============================================================ */
   :root{
@@ -66,8 +66,8 @@
   /* ---------- 眉標（mono，田野筆記感） ---------- */
   .eyebrow{
     font-family:var(--font-mono);
-    font-size:12px;
-    font-weight:400;          /* 保留原本視覺；抵銷 h2 預設粗體 */
+    font-size:14px;
+    font-weight:600;          /* 眉標加粗＋加大字級，與內文明確區隔 */
     letter-spacing:.14em;
     text-transform:uppercase;
     color:var(--accent);
@@ -262,6 +262,10 @@
   .mx h3{ font-size:1.1rem; margin:0 0 6px; line-height:1.4; }
   .mx .role{ font-family:var(--font-mono); font-size:11px; color:var(--ink-faint); letter-spacing:.05em; }
   .mx p{ margin:8px 0 0; color:var(--ink-soft); max-width:64ch; }
+  .mx-body{ display:flex; gap:clamp(14px,3vw,28px); align-items:flex-start; }
+  .mx-text{ flex:1 1 auto; min-width:0; }
+  .mx-fig{ flex:0 0 clamp(120px,20vw,168px); margin:4px 0 0; }
+  .mx-fig img{ display:block; width:100%; height:auto; aspect-ratio:4 / 3; object-fit:cover; border:1px solid var(--line); border-radius:6px; background:var(--paper-2); }
 
   /* ---------- Career timeline ---------- */
   .tl{ margin-top:8px; position:relative; }
@@ -360,6 +364,8 @@
     .tl-row{ grid-template-columns:1fr; gap:6px; }
     .edu-row{ grid-template-columns:1fr; gap:4px; }
     .mx{ grid-template-columns:1fr; gap:6px; }
+    .mx-body{ flex-direction:column; }
+    .mx-fig{ flex-basis:auto; width:100%; max-width:280px; }
     .cap{ grid-template-columns:1fr; gap:8px; }
     .cap-num{ padding-top:0; }
     .contact-item .k{ min-width:auto; }
