@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { inline } from '../lib/inline.js';
+import { inline, richText } from '../lib/inline.js';
 import site from '../data/site.json';
 import capabilitiesData from '../data/capabilities.json';
 const capabilities = capabilitiesData.items;
@@ -45,7 +45,7 @@ const { hero, about, footer, brandZh, brandEn } = site;
             <div class="zh">{hero.positionZh}</div>
             <div class="en">{hero.positionEn}</div>
           </div>
-          <p class="hero-lede reveal" set:html={inline(hero.lede)}></p>
+          <div class="hero-lede reveal" set:html={richText(hero.lede)}></div>
           <div class="cta-row reveal">
             <a class="btn btn-primary" href="#projects">{hero.ctaPrimary}</a>
             <a class="btn btn-ghost" href="#contact">{hero.ctaSecondary}</a>
@@ -66,8 +66,8 @@ const { hero, about, footer, brandZh, brandEn } = site;
     <div class="wrap">
       <h2 class="eyebrow">About ／ 關於</h2>
       <div class="prose">
-        <p class="lede" set:html={inline(about.lede)}></p>
-        <p style="margin-top:1.4em;">{about.para2}</p>
+        <div class="lede" set:html={richText(about.lede)}></div>
+        <div class="prose-body" set:html={richText(about.para2)}></div>
       </div>
       <p class="path" aria-label="職涯脈絡">
         {about.path.map((n, i) => (
