@@ -107,6 +107,8 @@ collections:
               - { label: "標題", name: "title", widget: "string" }
               - { label: "角色", name: "role", widget: "string" }
               - { label: "內文", name: "body", widget: "text" }
+              - { label: "圖片（選填，留空則不顯示）", name: "image", widget: "image", required: false }
+              - { label: "圖片替代文字 alt（選填）", name: "imageAlt", widget: "string", required: false }
 
       # ---------- 工作經歷 ----------
       - name: "experience"
