@@ -71,3 +71,28 @@
     revealEls.forEach(function(el){ ro.observe(el); });
   }
 })();
+
+/* YouTube 封面圖：點擊後才載入播放器（降低首次載入負擔、避免預先追蹤） */
+(function(){
+  var facades = document.querySelectorAll('.yt-facade');
+  Array.prototype.forEach.call(facades, function(box){
+    function play(){
+      var id = box.getAttribute('data-yt');
+      if(!id || box.dataset.loaded) return;
+      box.dataset.loaded = '1';
+      var iframe = document.createElement('iframe');
+      iframe.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0';
+      iframe.title = box.getAttribute('data-title') || '影片';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.allowFullscreen = true;
+      iframe.setAttribute('loading','lazy');
+      box.innerHTML = '';
+      box.appendChild(iframe);
+      box.style.cursor = 'default';
+    }
+    box.addEventListener('click', play);
+    box.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); play(); }
+    });
+  });
+})();
