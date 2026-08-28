@@ -88,19 +88,24 @@ collections:
               - { label: "專案名稱", name: "title", widget: "string" }
               - { label: "專案圖片（留空則顯示待補佔位）", name: "image", widget: "image", required: false }
               - { label: "影片連結（選填，貼 YouTube 網址；填了會優先顯示影片）", name: "video", widget: "string", required: false }
-              - label: "重點數字（選填，留空則不顯示；只填已驗證的數字）"
-                name: "impact"
-                widget: "list"
-                required: false
-                fields:
-                  - { label: "數字（例：150%）", name: "value", widget: "string" }
-                  - { label: "說明（例：單場參與人數成長）", name: "label", widget: "string" }
               - { label: "圖片替代文字 alt", name: "imageAlt", widget: "string" }
               - { label: "摘要", name: "summary", widget: "text" }
               - { label: "我的角色（詳）", name: "roleDetail", widget: "string" }
               - { label: "核心任務", name: "task", widget: "text" }
               - { label: "執行範圍（每項一條，可用 **粗體**）", name: "scope", widget: "list", field: { label: "項目", name: "item", widget: "string" } }
               - { label: "可驗證成果（可用 **粗體**）", name: "result", widget: "text" }
+              # 關鍵數據：顯示在專案摘要下方的大字數據列。
+              # 版面與渲染邏輯本來就已完成，先前缺的是這個欄位定義，
+              # 因此後台無從填寫，數字只能埋在「可驗證成果」的內文裡。
+              - label: "關鍵數據（選填，建議 1–3 組，留空則整列不顯示）"
+                name: "impact"
+                widget: "list"
+                required: false
+                max: 3
+                summary: "{{fields.value}}｜{{fields.label}}"
+                fields:
+                  - { label: "數字（例：150%、4 縣市、10 天）", name: "value", widget: "string" }
+                  - { label: "說明（例：單場培訓參與人數成長）", name: "label", widget: "string" }
 
       # ---------- 更多經歷 ----------
       - name: "more"
@@ -182,5 +187,11 @@ collections:
           - { label: "Email", name: "email", widget: "string" }
           - { label: "LinkedIn 網址", name: "linkedin", widget: "string" }
           - { label: "LinkedIn 顯示文字", name: "linkedinLabel", widget: "string" }
-          - { label: "履歷 PDF（上傳後自動接上下載鈕）", name: "resume", widget: "file", required: false }
+          # 履歷是文件不是圖片，改存 /assets/docs（原本與照片混在 /assets/images）
+          - label: "履歷 PDF（上傳後自動接上下載鈕）"
+            name: "resume"
+            widget: "file"
+            required: false
+            media_folder: "/public/assets/docs"
+            public_folder: "/assets/docs"
           - { label: "關注方向（每格一項）", name: "focus", widget: "list", field: { label: "項目", name: "item", widget: "string" } }
