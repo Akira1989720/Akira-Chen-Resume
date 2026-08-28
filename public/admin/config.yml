@@ -33,6 +33,7 @@ collections:
           - label: "Hero 首屏"
             name: "hero"
             widget: "object"
+            collapsed: false   # 預設展開，避免 CTA 等欄位被摺疊起來找不到
             fields:
               - { label: "側註（用 → 分隔）", name: "sidenote", widget: "string" }
               - { label: "主標題", name: "heading", widget: "string" }
@@ -40,8 +41,9 @@ collections:
               - { label: "定位（中）", name: "positionZh", widget: "string" }
               - { label: "定位（英）", name: "positionEn", widget: "string" }
               - { label: "簡介（可用 **粗體**）", name: "lede", widget: "text" }
-              - { label: "主要按鈕文字", name: "ctaPrimary", widget: "string" }
-              - { label: "次要按鈕文字", name: "ctaSecondary", widget: "string" }
+              # 兩顆按鈕的連結目標固定在版型裡，這裡只控制顯示文字
+              - { label: "CTA 按鈕一・實心（文字）", name: "ctaPrimary", widget: "string", hint: "首屏最左邊的深綠實心按鈕，點擊跳到「聯絡」區。建議填：馬上發個信給 Akira" }
+              - { label: "CTA 按鈕二・線框（文字）", name: "ctaSecondary", widget: "string", hint: "首屏中間的線框按鈕，點擊跳到「精選專案」區。建議填：查看精選專案" }
               - { label: "個人照", name: "portrait", widget: "image" }
               - { label: "個人照替代文字 alt", name: "portraitAlt", widget: "string" }
           - label: "About 關於"
@@ -187,6 +189,16 @@ collections:
           - { label: "Email", name: "email", widget: "string" }
           - { label: "LinkedIn 網址", name: "linkedin", widget: "string" }
           - { label: "LinkedIn 顯示文字", name: "linkedinLabel", widget: "string" }
+          # 其他社群：可自由增減，留空則整列不顯示
+          - label: "其他社群連結（可新增多筆，如 Instagram、Threads）"
+            name: "social"
+            widget: "list"
+            required: false
+            summary: "{{fields.label}}"
+            fields:
+              - { label: "平台名稱（例：Instagram、Threads、Facebook）", name: "label", widget: "string" }
+              - { label: "網址（含 https://）", name: "url", widget: "string" }
+              - { label: "顯示帳號或說明（選填，例：@akira1989720）", name: "handle", widget: "string", required: false }
           # 履歷是文件不是圖片，改存 /assets/docs（原本與照片混在 /assets/images）
           - label: "履歷 PDF（上傳後自動接上下載鈕）"
             name: "resume"
