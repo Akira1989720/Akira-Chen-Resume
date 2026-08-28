@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { inline, richText } from '../lib/inline.js';
+import { inline, richText, youtubeId } from '../lib/inline.js';
 import site from '../data/site.json';
 import capabilitiesData from '../data/capabilities.json';
 const capabilities = capabilitiesData.items;
@@ -102,9 +102,21 @@ const { hero, about, footer, brandZh, brandEn } = site;
   <section id="projects">
     <div class="wrap">
       <h2 class="eyebrow">Selected Projects ／ 精選專案</h2>
-      {projects.map((p) => (
+      {projects.map((p) => {
+        const vid = youtubeId(p.video || (String(p.image || '').includes('youtu') ? p.image : ''));
+        return (
         <article class="proj reveal">
-          {p.image
+          {vid
+            ? <div class="proj-media yt-facade" data-yt={vid} data-title={p.imageAlt || p.title}>
+                <img src={`https://i.ytimg.com/vi/${vid}/hqdefault.jpg`} width="1600" height="900" loading="lazy" decoding="async" alt={p.imageAlt || p.title} />
+                <button type="button" class="yt-play" aria-label={`播放影片：${p.title}`}>
+                  <svg viewBox="0 0 68 48" width="68" height="48" aria-hidden="true" focusable="false">
+                    <path class="yt-play-bg" d="M66.5 7.7c-.8-2.9-2.5-5.2-5.4-6C55.8.2 34 .2 34 .2s-21.8 0-27.1 1.5c-2.9.8-4.6 3.1-5.4 6C0 13 0 24 0 24s0 11 1.5 16.3c.8 2.9 2.5 5.2 5.4 6C12.2 47.8 34 47.8 34 47.8s21.8 0 27.1-1.5c2.9-.8 4.6-3.1 5.4-6C68 35 68 24 68 24s0-11-1.5-16.3z"/>
+                    <path d="M45 24 27 14v20" fill="#fff"/>
+                  </svg>
+                </button>
+              </div>
+            : p.image
             ? <figure class="proj-media" style="margin:0;"><img src={p.image} width="1600" height="900" loading="lazy" decoding="async" alt={p.imageAlt} style="display:block;width:100%;height:100%;object-fit:cover;" /></figure>
             : <div class="proj-media ph" role="img" aria-label={p.imageAlt + '（圖片待補）'}><span class="ph-label"><b>圖片待補</b>建議 16:9・原創現場照</span></div>}
           <div class="proj-body">
@@ -130,7 +142,8 @@ const { hero, about, footer, brandZh, brandEn } = site;
             </details>
           </div>
         </article>
-      ))}
+        );
+      })}
     </div>
   </section>
 
