@@ -87,6 +87,7 @@ collections:
               - { label: "角色標籤", name: "role", widget: "string" }
               - { label: "專案名稱", name: "title", widget: "string" }
               - { label: "專案圖片（留空則顯示待補佔位）", name: "image", widget: "image", required: false }
+              - { label: "影片連結（選填，貼 YouTube 網址；填了會優先顯示影片）", name: "video", widget: "string", required: false }
               - { label: "圖片替代文字 alt", name: "imageAlt", widget: "string" }
               - { label: "摘要", name: "summary", widget: "text" }
               - { label: "我的角色（詳）", name: "roleDetail", widget: "string" }
