@@ -185,12 +185,12 @@
 
   .hero h1{
     font-family:var(--font-display);
-    font-size:clamp(2.2rem, 6vw, 4.35rem);
+    font-size:clamp(2rem, 4.6vw, 3.4rem);
     font-weight:600;
     line-height:1.18;
-    letter-spacing:-.012em;
+    letter-spacing:0em;
     margin:0 0 var(--space-block);
-    max-width:13ch;
+    max-width:16ch;
   }
   .hero-lede{
     font-size:clamp(1.02rem,1.6vw,1.18rem);
@@ -563,8 +563,8 @@
   #contact button:focus-visible{ outline-color:var(--gold-soft); }
   .contact-lede{
     font-family:var(--font-display); font-weight:600;
-    font-size:clamp(1.85rem,4.6vw,3.35rem); line-height:1.32;
-    max-width:15ch; margin:clamp(20px,3vw,36px) 0 clamp(16px,2vw,24px);
+    font-size:clamp(1.7rem,3.8vw,2.8rem); line-height:1.32;
+    max-width:16ch; margin:clamp(20px,3vw,36px) 0 clamp(16px,2vw,24px);
     position:relative;
   }
   /* 文學收尾：淡金開場引號，只作視覺引導，不干擾閱讀 */
