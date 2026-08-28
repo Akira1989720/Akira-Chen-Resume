@@ -173,7 +173,10 @@
   /* ============================================================
      Hero
      ============================================================ */
-  .hero{ padding:clamp(48px,9vw,104px) 0 clamp(40px,7vw,80px); }
+  /* 下緣留白收斂：原本 hero 底 80px + #about 頂 112px 累積近 192px，
+     CTA 按鈕之後到 About 之間會出現一段過長的空白。 */
+  .hero{ padding:clamp(48px,9vw,104px) 0 clamp(28px,3.5vw,44px); }
+  #about{ padding-top:calc(var(--gap) * .6); }
   .hero-grid{ display:grid; grid-template-columns:1fr; gap:clamp(32px,5vw,56px); align-items:start; }
 
   .sidenote{
@@ -185,12 +188,12 @@
 
   .hero h1{
     font-family:var(--font-display);
-    font-size:clamp(2rem, 4.6vw, 3.4rem);
+    font-size:clamp(2.2rem, 6vw, 4.35rem);
     font-weight:600;
     line-height:1.18;
-    letter-spacing:0em;
+    letter-spacing:-.012em;
     margin:0 0 var(--space-block);
-    max-width:16ch;
+    max-width:13ch;
   }
   .hero-lede{
     font-size:clamp(1.02rem,1.6vw,1.18rem);
@@ -210,46 +213,64 @@
   .position .zh{ font-family:var(--font-display); font-size:1.35rem; color:var(--ink); }
   .position .en{ font-family:var(--font-mono); font-size:12.5px; color:var(--accent); letter-spacing:.04em; margin-top:4px; }
 
-  .cta-row{ display:flex; flex-wrap:wrap; gap:clamp(12px,2vw,22px); align-items:center; }
+  /* CTA：三顆共用同一組幾何（尺寸、內距、圓角、字級），
+     只用「填色 → 線框 → 淡線框」區分位階，避免三種互不相關的樣式並排。
+     上緣留白加大，與正文拉開距離。 */
+  .cta-row{
+    display:flex; flex-wrap:wrap; gap:12px; align-items:center;
+    margin-top:clamp(28px,3.6vw,44px);
+  }
   .btn{
     font-family:var(--font-body); font-size:15px; cursor:pointer;
     padding:13px 22px; border-radius:2px; border:1px solid transparent;
-    transition:background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+    line-height:1.2; white-space:nowrap;
     display:inline-flex; align-items:center; gap:8px;
+    transition:background var(--transition-fast), color var(--transition-fast),
+               border-color var(--transition-fast), transform var(--transition-fast),
+               box-shadow var(--transition-fast);
   }
+
+  /* 位階一：實心 — 最希望對方點的動作 */
   .btn-primary{
-    background:var(--accent); color:var(--paper);
-    transition:background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+    background:var(--accent); color:var(--paper); border-color:var(--accent);
   }
   .btn-primary:hover{
-    background:var(--accent-ink); color:var(--paper);
+    background:var(--accent-ink); border-color:var(--accent-ink); color:var(--paper);
     transform:translateY(-2px); box-shadow:0 6px 16px -8px rgba(31,74,70,.55);
   }
-  @media (prefers-reduced-motion:reduce){
-    .btn-primary{ transition:background var(--transition-fast); }
-    .btn-primary:hover{ transform:none; box-shadow:none; }
+
+  /* 位階二：線框 */
+  .btn-secondary{
+    background:transparent; color:var(--accent); border-color:var(--accent);
   }
-  /* 次要：接近文字連結，箭頭微移 */
-  .btn-ghost{
-    background:transparent; color:var(--ink); border-color:transparent;
-    padding:13px 2px; position:relative;
+  .btn-secondary:hover{
+    background:var(--accent); color:var(--paper); border-color:var(--accent);
+    transform:translateY(-2px); box-shadow:0 6px 16px -8px rgba(31,74,70,.45);
   }
-  .btn-ghost::after{ content:"→"; transition:transform var(--transition-fast); }
-  .btn-ghost::before{
-    content:""; position:absolute; left:2px; right:2px; bottom:9px; height:1px;
-    background:var(--accent); transform:scaleX(0); transform-origin:left;
-    transition:transform var(--transition-fast);
+
+  /* 位階三：淡線框 — 輔助下載 */
+  .btn-tertiary{
+    background:transparent; color:var(--ink-soft); border-color:var(--line-2);
   }
-  .btn-ghost:hover{ color:var(--accent); border-color:transparent; }
-  .btn-ghost:hover::after{ transform:translateX(4px); }
-  .btn-ghost:hover::before{ transform:scaleX(1); }
-  /* 第三階：最輕 */
-  .btn-plain{ background:none; color:var(--ink-faint); padding:13px 2px; font-size:14px; }
-  .btn-plain:hover{ color:var(--accent); }
-  .btn-plain .tag{ font-family:var(--font-mono); font-size:10px; color:var(--ink-faint); letter-spacing:.06em; border:1px solid var(--line-2); padding:1px 5px; border-radius:2px;}
+  .btn-tertiary:hover{
+    color:var(--accent); border-color:var(--accent);
+    transform:translateY(-2px);
+  }
+  .btn-tertiary .tag{
+    font-family:var(--font-mono); font-size:10px; color:var(--ink-faint);
+    letter-spacing:.06em; border:1px solid var(--line-2); padding:1px 5px; border-radius:2px;
+    transition:border-color var(--transition-fast), color var(--transition-fast);
+  }
+  .btn-tertiary:hover .tag{ color:var(--accent); border-color:var(--accent); }
+
   @media (prefers-reduced-motion: reduce){
-    .btn, .btn-ghost::after, .btn-ghost::before{ transition:none; }
-    .btn-ghost:hover::after{ transform:none; }
+    .btn, .btn-tertiary .tag{ transition:background .18s ease, color .18s ease, border-color .18s ease; }
+    .btn:hover{ transform:none; box-shadow:none; }
+  }
+  @media (max-width:420px){
+    /* 窄螢幕改為整排堆疊，避免按鈕被擠成兩種寬度 */
+    .cta-row{ gap:10px; }
+    .btn{ white-space:normal; }
   }
 
   /* 圖片 placeholder（中性、明確標示、非假內容） */
@@ -295,11 +316,14 @@
   #projects{ padding-block:calc(var(--gap) * 1.12); }
   #skills{ padding-block:calc(var(--gap) * .82); }
 
-  /* 同一色帶內的接續區塊：收掉重複的上緣留白，讓兩者讀成一組而非兩章 */
+  /* 同一色帶內的接續區塊：收掉重複的上緣留白，並以髮絲線標示換章。
+     色帶相同時純靠留白分隔，會讀成一段沒有交代的空白（回饋：「分隔」），
+     故補上與 #projects 原本相同語彙的滿版細線。 */
   #more,
   #education{
-    padding-top:calc(var(--gap) * .42);
+    padding-top:calc(var(--gap) * .52);
     padding-bottom:calc(var(--gap) * .82);
+    border-top:1px solid var(--line);
   }
   .lede{ font-size:clamp(1.05rem,1.7vw,1.25rem); color:var(--ink); max-width:62ch; line-height:1.85; }
   .prose .lede p{ margin:0 0 .7em; }
@@ -475,9 +499,14 @@
   .skill:last-child{ border-bottom:1px solid var(--line); }
   /* 分類標題：加編號感的字重與色階，與內容明確分層 */
   .skill h3{
-    font-family:var(--font-mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+    font-family:var(--font-mono); font-size:13.5px; letter-spacing:.12em; text-transform:uppercase;
     color:var(--accent); margin:0; font-weight:600;
-    display:flex; align-items:center; gap:12px;
+    display:flex; align-items:center; gap:10px;
+  }
+  /* 短色標：讓左欄的分類名在掃讀時先被抓到 */
+  .skill h3::before{
+    content:""; flex:0 0 auto; width:18px; height:2px;
+    background:var(--accent);
   }
   .skill h3::after{
     content:""; flex:1; height:1px;
@@ -487,9 +516,18 @@
   @media (min-width:900px){
     /* 標題左、內容右：橫向分欄讓分類一眼可辨 */
     .skill{ grid-template-columns:200px 1fr; gap:clamp(20px,3vw,40px); align-items:start; }
-    .skill h3{ padding-top:4px; }
+    .skill h3{ padding-top:5px; }
     .skill h3::after{ display:none; }
+
+    /* 修正 grid 自動排版：.skill 是兩欄 grid，多數區塊剛好 2 個子元素，
+       但「AI 與數位工具」有 5 個（h3／說明／附註／兩個作品連結），
+       多出來的會依序被塞回左側的標題欄，造成內容左右交錯。
+       此處強制標題以外的所有內容留在右欄，依序往下堆疊。 */
+    .skill > *:not(h3){ grid-column:2; }
   }
+  /* 附註與作品連結緊跟在說明之後，與下一組保持區隔 */
+  .skill .note-inline{ margin-top:2px; }
+  .skill .work-link + .work-link{ margin-top:2px; }
   .chiprow{ display:flex; flex-wrap:wrap; gap:6px 10px; }
   .chip{
     font-family:var(--font-body); font-size:13.5px; color:var(--ink-soft);
@@ -563,8 +601,8 @@
   #contact button:focus-visible{ outline-color:var(--gold-soft); }
   .contact-lede{
     font-family:var(--font-display); font-weight:600;
-    font-size:clamp(1.7rem,3.8vw,2.8rem); line-height:1.32;
-    max-width:16ch; margin:clamp(20px,3vw,36px) 0 clamp(16px,2vw,24px);
+    font-size:clamp(1.85rem,4.6vw,3.35rem); line-height:1.32;
+    max-width:15ch; margin:clamp(20px,3vw,36px) 0 clamp(16px,2vw,24px);
     position:relative;
   }
   /* 文學收尾：淡金開場引號，只作視覺引導，不干擾閱讀 */
@@ -585,6 +623,13 @@
   }
   .contact-item .k{ font-family:var(--font-mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint); min-width:104px; }
   .contact-item .v{ font-size:1.05rem; }
+  /* 社群連結：同一列橫排，數量由 CMS 決定 */
+  .social-links{ display:flex; flex-wrap:wrap; gap:8px clamp(16px,2.4vw,28px); }
+  .social-links .handle{
+    font-family:var(--font-mono); font-size:12px; color:var(--ink-faint);
+    letter-spacing:.02em; margin-left:7px;
+  }
+  #contact .social-links .handle{ color:var(--on-accent-soft); }
   .focus-areas{ margin-top:clamp(26px,3.5vw,40px); display:flex; flex-wrap:wrap; gap:6px 10px; }
   .focus-areas .chip{ border-color:color-mix(in srgb,var(--accent) 30%, var(--line)); color:var(--accent); }
 
