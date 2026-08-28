@@ -225,6 +225,20 @@
 
   .proj-head{ display:grid; grid-template-columns:1fr; }
   .proj-media{ aspect-ratio:16/9; border-bottom:1px solid var(--line); }
+  /* YouTube 封面圖 + 播放鍵（點擊後才載入播放器） */
+  .yt-facade{ position:relative; overflow:hidden; background:var(--paper-2); cursor:pointer; }
+  .yt-facade img{ display:block; width:100%; height:100%; object-fit:cover; }
+  .yt-facade iframe{ display:block; width:100%; height:100%; border:0; }
+  .yt-play{
+    position:absolute; inset:0; margin:0; display:flex; align-items:center; justify-content:center;
+    width:100%; height:100%; padding:0; border:0; background:transparent; cursor:pointer;
+  }
+  .yt-play svg{ width:68px; height:48px; filter:drop-shadow(0 1px 3px rgba(0,0,0,.35)); transition:transform .18s ease; }
+  .yt-play .yt-play-bg{ fill:#1C1B19; fill-opacity:.78; transition:fill-opacity .18s ease; }
+  .yt-facade:hover .yt-play svg{ transform:scale(1.06); }
+  .yt-facade:hover .yt-play .yt-play-bg{ fill:var(--accent); fill-opacity:.92; }
+  .yt-play:focus-visible{ outline:2px solid var(--accent); outline-offset:-4px; }
+  @media (prefers-reduced-motion:reduce){ .yt-play svg{ transition:none; } .yt-facade:hover .yt-play svg{ transform:none; } }
   .proj-body{ padding:clamp(20px,3.5vw,32px); }
   .proj-meta{ display:flex; flex-wrap:wrap; gap:8px 12px; align-items:center; margin-bottom:14px; }
   .badge{
