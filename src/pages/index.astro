@@ -47,11 +47,12 @@ const { hero, about, footer, brandZh, brandEn } = site;
           </div>
           <div class="hero-lede reveal" set:html={richText(hero.lede)}></div>
           <div class="cta-row reveal">
-            <a class="btn btn-primary" href="#projects">{hero.ctaPrimary}</a>
-            <a class="btn btn-ghost" href="#contact">{hero.ctaSecondary}</a>
+            {/* 位階：聯絡（最高、最左）→ 專案 → 履歷 */}
+            <a class="btn btn-primary" href="#contact">{hero.ctaPrimary}</a>
+            <a class="btn btn-secondary" href="#projects">{hero.ctaSecondary}</a>
             {contact.resume
-              ? <a class="btn btn-plain" href={contact.resume} target="_blank" rel="noopener noreferrer">履歷下載 <span class="tag">PDF</span></a>
-              : <a class="btn btn-plain" href="#" id="resumeBtn" aria-label="下載履歷（檔案待補）">履歷下載 <span class="tag">PDF・待補</span></a>}
+              ? <a class="btn btn-tertiary" href={contact.resume} target="_blank" rel="noopener noreferrer">履歷下載 <span class="tag">PDF</span></a>
+              : <a class="btn btn-tertiary" href="#" id="resumeBtn" aria-label="下載履歷（檔案待補）">履歷下載 <span class="tag">PDF・待補</span></a>}
           </div>
         </div>
         <figure class="hero-portrait-fig reveal" style="margin:0;">
@@ -259,6 +260,15 @@ const { hero, about, footer, brandZh, brandEn } = site;
       <div class="contact-list">
         <div class="contact-item"><span class="k">Email</span><span class="v"><a href={'mailto:' + contact.email}>{contact.email}</a></span></div>
         <div class="contact-item"><span class="k">LinkedIn</span><span class="v"><a href={contact.linkedin} target="_blank" rel="noopener noreferrer">{contact.linkedinLabel} ↗</a></span></div>
+        {contact.social && contact.social.length > 0 && (
+          <div class="contact-item"><span class="k">社群</span><span class="v social-links">
+            {contact.social.map((s) => (
+              <a href={s.url} target="_blank" rel="noopener noreferrer">
+                {s.label}{s.handle && <span class="handle">{s.handle}</span>} ↗
+              </a>
+            ))}
+          </span></div>
+        )}
         <div class="contact-item"><span class="k">履歷</span><span class="v">
           {contact.resume
             ? <a href={contact.resume} target="_blank" rel="noopener noreferrer">履歷下載</a>
