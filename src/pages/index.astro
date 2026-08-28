@@ -102,10 +102,12 @@ const { hero, about, footer, brandZh, brandEn } = site;
   <section id="projects">
     <div class="wrap">
       <h2 class="eyebrow">Selected Projects ／ 精選專案</h2>
-      {projects.map((p) => {
+      {projects.map((p, i) => {
         const vid = youtubeId(p.video || (String(p.image || '').includes('youtu') ? p.image : ''));
+        const num = String(i + 1).padStart(2, '0');
         return (
-        <article class="proj reveal">
+        <article class={i === 0 ? 'proj proj-lead reveal' : 'proj reveal'}>
+          <p class="proj-num" aria-hidden="true">{num}</p>
           {vid
             ? <div class="proj-media yt-facade" data-yt={vid} data-title={p.imageAlt || p.title}>
                 <img src={`https://i.ytimg.com/vi/${vid}/hqdefault.jpg`} width="1600" height="900" loading="lazy" decoding="async" alt={p.imageAlt || p.title} />
@@ -120,13 +122,25 @@ const { hero, about, footer, brandZh, brandEn } = site;
             ? <figure class="proj-media" style="margin:0;"><img src={p.image} width="1600" height="900" loading="lazy" decoding="async" alt={p.imageAlt} style="display:block;width:100%;height:100%;object-fit:cover;" /></figure>
             : <div class="proj-media ph" role="img" aria-label={p.imageAlt + '（圖片待補）'}><span class="ph-label"><b>圖片待補</b>建議 16:9・原創現場照</span></div>}
           <div class="proj-body">
-            <div class="proj-meta">
-              <span class="badge">{p.org}</span>
-              <span class="badge">{p.period}</span>
-              <span class="badge badge-role">{p.role}</span>
-            </div>
+            <p class="proj-meta">
+              <span class="m-org">{p.org}</span>
+              <span class="m-sep" aria-hidden="true">／</span>
+              <span class="m-period">{p.period}</span>
+              <span class="m-sep" aria-hidden="true">／</span>
+              <span class="m-role">{p.role}</span>
+            </p>
             <h3>{p.title}</h3>
             <p class="proj-summary">{p.summary}</p>
+            {p.impact && p.impact.length > 0 && (
+              <div class="impact-row">
+                {p.impact.map((s) => (
+                  <div class="impact-stat">
+                    <span class="impact-value">{s.value}</span>
+                    <span class="impact-label">{s.label}</span>
+                  </div>
+                ))}
+              </div>
+            )}
             <details class="more">
               <summary><span class="chev">▸</span> 展開背景、任務與成果</summary>
               <div class="detail-grid">
