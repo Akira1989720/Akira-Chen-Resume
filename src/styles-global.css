@@ -5,9 +5,14 @@
   :root{
     --paper:      #F4F2EC;   /* 背景：紙感、微暖但偏冷，避開 AI 奶油白 */
     --paper-2:    #ECE9E1;   /* 區塊交替、卡片底 */
-    --ink:        #1C1B19;   /* 正文近黑 */
-    --ink-soft:   #56534C;   /* 次要文字 */
-    --ink-faint:  #6F6A62;   /* 註記、頁邊（加深以達基本可讀對比） */
+    --ink:        #1C1B19;   /* 正文近黑                        對 paper 15.4:1 */
+    --ink-soft:   #56534C;   /* 次要文字                        對 paper  6.9:1 */
+    --ink-faint:  #6A655D;   /* 註記、頁邊 — 加深一階，使其疊在 paper-2 上亦達 AA
+                                paper 5.2:1／paper-2 4.8:1（原 #6F6A62 在 paper-2 為 4.42，未達標） */
+    --num:        #8E836D;   /* 大號編號（01–05／專案序號）專用石色
+                                paper 3.3:1／paper-2 3.1:1，達大字 AA。
+                                原先沿用 --line-2 僅 1.5:1，編號幾乎不可見，
+                                但它承載的是章節結構訊息，不是純裝飾。 */
     --accent:     #1F4A46;   /* 深松綠靛 — 呼應環境與海，非赭橘套版 */
     --accent-ink: #16332F;   /* accent 深階，hover/focus */
     --gold:       #A8853F;   /* 裝飾用暖金：僅作點綴，不作主色 */
@@ -15,14 +20,22 @@
     --line:       #D9D5CB;   /* 髮絲線 */
     --line-2:     #CFC9BC;
 
+    /* 反白區（Contact）：全站唯一的大面積色塊 */
+    --on-accent:        #F4F2EC;             /* 對 accent 8.8:1 */
+    --on-accent-soft:   #B4C4BF;             /* 對 accent 5.5:1 */
+    --rule-on-accent:        rgba(244,242,236,.20);
+    --rule-on-accent-strong: rgba(244,242,236,.38);
+
     --font-display: "Noto Serif TC","Source Han Serif TC","Palatino Linotype","Iowan Old Style",Georgia,"Songti TC",serif;
     --font-body: system-ui,-apple-system,"PingFang TC","Microsoft JhengHei","Noto Sans TC","Helvetica Neue",Arial,sans-serif;
     --font-mono: ui-monospace,"SF Mono","SFMono-Regular",Menlo,Consolas,"Courier New",monospace;
 
     --maxw: 1200px;
     --pad: clamp(20px, 5vw, 64px);
-    /* 區塊呼吸感：手機 72–96 / 平板 96–120 / 桌機 120–160 */
-    --gap: clamp(72px, 9vw, 152px);
+    /* 區塊呼吸感。原為 clamp(72px, 9vw, 152px)：桌機上下各 152px，
+       相鄰兩區塊之間累積 304px 純空白，且無底色變化可定位，
+       捲動時會失去所在位置感。改由下方的色帶交替承擔分區，留白得以收斂。 */
+    --gap: clamp(64px, 7vw, 112px);
     --space-block: clamp(28px, 4vw, 56px);
     --transition-fast: .18s ease;
     --transition-medium: .32s ease;
@@ -144,7 +157,7 @@
   @media (prefers-reduced-motion: reduce){
     .navlink, .navlink::before{ transition:none; }
   }
-  .navlink small{ display:block; font-family:var(--font-body); font-size:9px; color:var(--ink-faint); letter-spacing:.1em; text-transform:uppercase;}
+  .navlink small{ display:block; font-family:var(--font-body); font-size:10.5px; color:var(--ink-faint); letter-spacing:.1em; text-transform:uppercase;}
   .navlink[aria-current="true"]{ color:var(--accent); }
   .navlink[aria-current="true"]::after{
     content:""; position:absolute; left:11px; right:11px; bottom:2px; height:2px; background:var(--accent);
@@ -164,7 +177,7 @@
   .hero-grid{ display:grid; grid-template-columns:1fr; gap:clamp(32px,5vw,56px); align-items:start; }
 
   .sidenote{
-    font-family:var(--font-mono); font-size:11.5px; letter-spacing:.06em;
+    font-family:var(--font-mono); font-size:12.5px; letter-spacing:.06em;
     color:var(--ink-faint); margin:0 0 26px; padding-left:14px;
     border-left:1px solid var(--line-2); line-height:1.7;
   }
@@ -249,7 +262,7 @@
     color:var(--ink-faint);
   }
   .ph-label{
-    font-family:var(--font-mono); font-size:11.5px; letter-spacing:.05em; line-height:1.7;
+    font-family:var(--font-mono); font-size:12.5px; letter-spacing:.05em; line-height:1.7;
     padding:14px; max-width:90%;
   }
   .ph-label b{ display:block; color:var(--ink-soft); font-weight:600; margin-bottom:3px; letter-spacing:.08em; }
@@ -259,11 +272,35 @@
      一般區塊
      ============================================================ */
   section{ padding-block:var(--gap); }
-  /* 只在需要「換篇章」的位置保留分界，其餘靠留白 */
-  #projects, #contact{ border-top:1px solid var(--line); }
-  /* 節奏：主要區塊更寬鬆，輔助區塊略收，避免機械等距 */
-  #projects{ padding-block:calc(var(--gap) * 1.15); }
-  #more, #skills, #education{ padding-block:calc(var(--gap) * .78); }
+
+  /* ---------- 色帶交替 ----------
+     --paper-2 原本的註解就寫著「區塊交替」，但先前從未實際用於任何 section，
+     整頁因此是同一個底色的連續長卷。此處落實該設計意圖。
+
+     色帶的分組刻意對齊導覽的分組（scrollspy 將 more 併入 projects、
+     education 併入 skills），使「同一色帶＝同一章節」，
+     底色因此承載結構訊息，而非單純裝飾：
+
+       hero + about            paper
+       capabilities            paper-2
+       projects + more         paper
+       experience              paper-2
+       skills + education      paper
+       contact                 accent（反白收尾）
+     ------------------------------------------- */
+  #capabilities,
+  #experience{ background:var(--paper-2); }
+
+  /* 節奏：主角區塊留白略寬，輔助區塊略收，避免機械等距 */
+  #projects{ padding-block:calc(var(--gap) * 1.12); }
+  #skills{ padding-block:calc(var(--gap) * .82); }
+
+  /* 同一色帶內的接續區塊：收掉重複的上緣留白，讓兩者讀成一組而非兩章 */
+  #more,
+  #education{
+    padding-top:calc(var(--gap) * .42);
+    padding-bottom:calc(var(--gap) * .82);
+  }
   .lede{ font-size:clamp(1.05rem,1.7vw,1.25rem); color:var(--ink); max-width:62ch; line-height:1.85; }
   .prose .lede p{ margin:0 0 .7em; }
   .prose .lede p:last-child{ margin-bottom:0; }
@@ -291,7 +328,7 @@
     font-family:var(--font-mono);
     font-size:clamp(1.6rem, 3.4vw, 2.75rem);
     font-weight:400; line-height:1;
-    color:var(--line-2);
+    color:var(--num);
     letter-spacing:.01em; padding-top:2px;
   }
   .cap h3{ font-family:var(--font-display); font-size:clamp(1.2rem,2vw,1.5rem); font-weight:600; margin:0 0 12px; line-height:1.45; max-width:22ch; }
@@ -309,7 +346,7 @@
   .proj-num{
     font-family:var(--font-mono);
     font-size:clamp(1.6rem,3.4vw,2.75rem);
-    font-weight:400; line-height:1; color:var(--line-2);
+    font-weight:400; line-height:1; color:var(--num);
     margin:0 0 clamp(14px,2vw,22px);
   }
   .proj-media{ aspect-ratio:16/9; border:1px solid var(--line); border-radius:2px; overflow:hidden; }
@@ -337,7 +374,7 @@
   .proj-meta{
     display:flex; flex-wrap:wrap; align-items:baseline;
     gap:6px clamp(12px,2vw,20px); margin-bottom:clamp(14px,2vw,20px);
-    font-family:var(--font-mono); font-size:11.5px; letter-spacing:.08em;
+    font-family:var(--font-mono); font-size:12.5px; letter-spacing:.08em;
     color:var(--ink-faint); text-transform:uppercase;
   }
   .proj-meta .m-org{ color:var(--ink-soft); }
@@ -365,7 +402,7 @@
 
   .detail-grid{ display:grid; grid-template-columns:1fr; gap:clamp(22px,3vw,32px); padding:6px 0 8px; }
   .dl h4{
-    font-family:var(--font-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+    font-family:var(--font-mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase;
     color:var(--ink-faint); margin:0 0 10px; font-weight:600;
   }
   .dl p{ margin:0; color:var(--ink-soft); max-width:40em; }
@@ -378,7 +415,7 @@
   .impact-row{ display:flex; flex-wrap:wrap; gap:clamp(24px,4vw,56px); margin:clamp(18px,2.4vw,26px) 0 0; }
   .impact-stat{ display:flex; flex-direction:column; gap:4px; }
   .impact-value{ font-family:var(--font-display); font-size:clamp(1.8rem,3.6vw,2.7rem); font-weight:600; line-height:1; color:var(--ink); }
-  .impact-label{ font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; color:var(--ink-faint); }
+  .impact-label{ font-family:var(--font-mono); font-size:12px; letter-spacing:.08em; color:var(--ink-faint); }
 
   /* 精選專案：桌機統一採並排版式（媒體左／內容右） */
   @media (min-width:1000px){
@@ -393,6 +430,9 @@
     .proj .proj-media{ grid-area:media; }
     .proj .proj-body{ grid-area:body; padding-top:0; }
     .proj h3{ font-size:clamp(1.7rem,2.6vw,2.35rem); max-width:18ch; }
+    /* 桌機的 body 欄位較窄（1fr），數據列需收斂級數與間距才不會擠換行 */
+    .proj .impact-row{ gap:clamp(16px,1.8vw,30px); }
+    .proj .impact-value{ font-size:clamp(1.5rem,2.1vw,2rem); }
     /* 展開內容跨滿整列，維持舒適行長 */
     .proj details.more{ grid-area:details; }
     .proj{ grid-template-areas:"num num" "media body" "details details"; }
@@ -407,7 +447,7 @@
   .mx:last-child{ border-bottom:1px solid var(--line); }
   .mx .yr{ font-family:var(--font-mono); font-size:12px; color:var(--ink-faint); letter-spacing:.03em; padding-top:5px; line-height:1.6; }
   .mx h3{ font-family:var(--font-display); font-weight:600; font-size:1.15rem; margin:0 0 6px; line-height:1.45; max-width:26ch; }
-  .mx .role{ font-family:var(--font-mono); font-size:11px; color:var(--ink-faint); letter-spacing:.05em; }
+  .mx .role{ font-family:var(--font-mono); font-size:12.5px; color:var(--ink-faint); letter-spacing:.05em; }
   .mx p{ margin:10px 0 0; color:var(--ink-soft); max-width:38em; }
   .mx-body{ display:flex; gap:clamp(14px,3vw,28px); align-items:flex-start; }
   .mx-text{ flex:1 1 auto; min-width:0; }
@@ -423,7 +463,7 @@
   .tl-row:last-child{ border-bottom:1px solid var(--line); }
   .tl-yr{ font-family:var(--font-mono); font-size:13px; color:var(--accent); letter-spacing:.02em; padding-top:3px; }
   .tl-title{ font-family:var(--font-display); font-weight:600; font-size:clamp(1.15rem,1.9vw,1.4rem); color:var(--ink); margin:0 0 6px; line-height:1.4; }
-  .tl-org{ font-family:var(--font-mono); font-size:11.5px; color:var(--ink-faint); letter-spacing:.05em; margin:0 0 12px; }
+  .tl-org{ font-family:var(--font-mono); font-size:12.5px; color:var(--ink-faint); letter-spacing:.05em; margin:0 0 12px; }
   .tl-row p{ margin:0; color:var(--ink-soft); max-width:40em; }
 
   /* ---------- Skills：參考資料，靠分類標題建立階層 ---------- */
@@ -466,8 +506,8 @@
     .chip{ transition:none; }
     .chip:hover{ transform:none; box-shadow:none; }
   }
-  .note-inline{ font-family:var(--font-mono); font-size:11.5px; color:var(--ink-faint); letter-spacing:.02em; margin-top:2px; }
-  .work-link{ font-family:var(--font-mono); font-size:12.5px; margin:0; }
+  .note-inline{ font-family:var(--font-mono); font-size:12px; color:var(--ink-faint); letter-spacing:.02em; margin-top:2px; }
+  .work-link{ font-family:var(--font-mono); font-size:13px; margin:0; }
 
   /* ---------- Education ---------- */
   .edu-row{ display:grid; grid-template-columns:104px 1fr; gap:clamp(16px,3vw,40px); padding:clamp(16px,2vw,22px) 0; border-top:1px solid var(--line); }
@@ -476,8 +516,51 @@
   .edu-row .t{ font-family:var(--font-display); font-size:1.08rem; font-weight:600; margin:0; line-height:1.5; }
   .edu-row .s{ color:var(--ink-soft); font-size:15px; margin-top:2px; }
 
-  /* ---------- Contact：雜誌的結尾頁 ---------- */
-  #contact{ padding-bottom:clamp(96px,12vw,180px); }
+  /* ---------- Contact：雜誌的結尾頁 ----------
+     全站唯一的大面積色塊。--accent 原本只出現在髮絲線與小級數文字上，
+     用得很廣卻從未形成任何色塊，視覺上感受不到主色的存在。
+     收尾處反白，讓主色一次成為版面量體，同時明確標示頁面結束。 */
+  #contact{
+    background:var(--accent);
+    color:var(--on-accent);
+    padding-bottom:clamp(88px,10vw,150px);
+  }
+  #contact .eyebrow{ color:var(--on-accent-soft); }
+  #contact .eyebrow::after{
+    background:var(--rule-on-accent);
+    animation:none;
+  }
+  #contact .contact-lede{ color:var(--on-accent); }
+  #contact .contact-lede::before{ color:var(--gold-soft); opacity:.7; }
+  #contact .contact-sub{ color:var(--on-accent-soft); }
+  #contact .contact-list{ border-top-color:var(--rule-on-accent); }
+  #contact .contact-item{ border-bottom-color:var(--rule-on-accent); }
+  #contact .contact-item .k{ color:var(--on-accent-soft); }
+  #contact .contact-item .v{ color:var(--on-accent); }
+  #contact .contact-item .v a{
+    color:var(--on-accent);
+    text-decoration:underline;
+    text-underline-offset:3px;
+    text-decoration-color:var(--rule-on-accent-strong);
+    transition:color var(--transition-fast), text-decoration-color var(--transition-fast);
+  }
+  #contact .contact-item .v a:hover{
+    color:var(--gold-soft);
+    text-decoration-color:var(--gold-soft);
+  }
+  #contact .note-inline{ color:var(--on-accent-soft); }
+  #contact .focus-areas .chip{
+    color:var(--on-accent-soft);
+    border-color:var(--rule-on-accent-strong);
+  }
+  #contact .focus-areas .chip:hover{
+    color:var(--on-accent);
+    border-color:var(--gold-soft);
+    box-shadow:none;
+  }
+  /* 反白區的鍵盤焦點框需改用暖金，深綠底上的深綠外框看不見 */
+  #contact a:focus-visible,
+  #contact button:focus-visible{ outline-color:var(--gold-soft); }
   .contact-lede{
     font-family:var(--font-display); font-weight:600;
     font-size:clamp(1.85rem,4.6vw,3.35rem); line-height:1.32;
@@ -500,7 +583,7 @@
     display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 18px;
     padding:clamp(16px,2vw,22px) 0; border-bottom:1px solid var(--line);
   }
-  .contact-item .k{ font-family:var(--font-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint); min-width:104px; }
+  .contact-item .k{ font-family:var(--font-mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint); min-width:104px; }
   .contact-item .v{ font-size:1.05rem; }
   .focus-areas{ margin-top:clamp(26px,3.5vw,40px); display:flex; flex-wrap:wrap; gap:6px 10px; }
   .focus-areas .chip{ border-color:color-mix(in srgb,var(--accent) 30%, var(--line)); color:var(--accent); }
@@ -509,19 +592,32 @@
   footer{ border-top:1px solid var(--line); background:var(--paper-2); }
   .foot-inner{ max-width:var(--maxw); margin-inline:auto; padding:clamp(36px,4vw,52px) var(--pad); }
   .foot-motto{ font-family:var(--font-display); font-size:1.02rem; color:var(--ink-soft); margin:0 0 14px; }
-  .foot-meta{ font-family:var(--font-mono); font-size:11.5px; color:var(--ink-faint); letter-spacing:.02em; line-height:1.9; }
+  .foot-meta{ font-family:var(--font-mono); font-size:12px; color:var(--ink-faint); letter-spacing:.02em; line-height:1.9; }
   .foot-meta .cc{ color:var(--ink-soft); }
 
   /* ============================================================
      Reveal 動畫（一次性，尊重 reduced-motion）
      ============================================================ */
-  .reveal{
+  /* 只有在 <html class="js"> 時才以 opacity:0 起始。
+     該 class 由 Base.astro <head> 內的同步 script 加上，
+     因此 JS 被完全阻擋時內容直接可見，不會停在隱形狀態。
+     （三個精選專案整包帶 .reveal，先前若 JS 失效即永久看不見。） */
+  .js .reveal{
     opacity:0; transform:translateY(16px);
     transition:opacity .8s cubic-bezier(.22,.61,.36,1), transform .8s cubic-bezier(.22,.61,.36,1);
   }
-  .reveal.in{ opacity:1; transform:none; }
+  .js .reveal.in{ opacity:1; transform:none; }
+
+  /* 進一步備援：瀏覽器明確回報不執行 script 時 */
+  @media (scripting: none){
+    .js .reveal{ opacity:1; transform:none; transition:none; }
+  }
   @media (prefers-reduced-motion: reduce){
-    .reveal{ opacity:1; transform:none; transition:none; }
+    .js .reveal{ opacity:1; transform:none; transition:none; }
+  }
+  /* 列印一律顯示 */
+  @media print{
+    .js .reveal{ opacity:1 !important; transform:none !important; }
   }
 
   /* ============================================================
