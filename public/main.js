@@ -96,3 +96,18 @@
     });
   });
 })();
+
+/* 導覽：滾動後略為收合（安靜、無位移跳動） */
+(function(){
+  var nav = document.querySelector('.nav');
+  if(!nav) return;
+  var ticking = false;
+  function update(){
+    nav.classList.toggle('is-compact', window.scrollY > 64);
+    ticking = false;
+  }
+  window.addEventListener('scroll', function(){
+    if(!ticking){ window.requestAnimationFrame(update); ticking = true; }
+  }, { passive:true });
+  update();
+})();
