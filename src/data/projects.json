@@ -17,8 +17,9 @@
       "role": "角色・主責執行",
       "title": "行動裝備與專業志工培訓體系",
       "id": "training",
-      "image": "https://www.youtube.com/watch?v=-TCDHKJHVl4",
-      "result": "辦理2025-2026年度基礎行動培訓營隊，透過招募管道與說明會內容的重新設計，使基礎行動培訓單場參與人數，成長150%。"
+      "image": "",
+      "result": "辦理2025-2026年度基礎行動培訓營隊，透過招募管道與說明會內容的重新設計，使基礎行動培訓單場參與人數，成長150%。",
+      "video": "https://www.youtube.com/watch?v=-TCDHKJHVl4"
     },
     {
       "period": "2018 – 2022",
@@ -55,8 +56,9 @@
       "role": "角色・協助後勤",
       "title": "消失的文化地景專案：2023 大甲媽祖繞境氣候倡議後勤",
       "id": "mazu",
-      "image": "https://www.youtube.com/watch?v=C7UFEdn6JD0",
-      "result": "**完成為期 10 天的跨縣市物資與後勤支援**。"
+      "image": "",
+      "result": "**完成為期 10 天的跨縣市物資與後勤支援**。",
+      "video": "https://www.youtube.com/watch?v=C7UFEdn6JD0"
     }
   ]
 }
