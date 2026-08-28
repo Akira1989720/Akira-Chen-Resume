@@ -4,19 +4,21 @@
   /* ---- 手機導覽開合 ---- */
   var toggle = document.getElementById('navToggle');
   var links  = document.getElementById('navLinks');
-  toggle.addEventListener('click', function(){
-    var open = links.classList.toggle('open');
-    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    toggle.textContent = open ? '關閉 ×' : '選單 ＋';
-  });
-  /* 點連結後收起手機選單 */
-  links.addEventListener('click', function(e){
-    if(e.target.closest('.navlink') && links.classList.contains('open')){
-      links.classList.remove('open');
-      toggle.setAttribute('aria-expanded','false');
-      toggle.textContent = '選單 ＋';
-    }
-  });
+  if(toggle && links){
+    toggle.addEventListener('click', function(){
+      var open = links.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.textContent = open ? '關閉 ×' : '選單 ＋';
+    });
+    /* 點連結後收起手機選單 */
+    links.addEventListener('click', function(e){
+      if(e.target.closest('.navlink') && links.classList.contains('open')){
+        links.classList.remove('open');
+        toggle.setAttribute('aria-expanded','false');
+        toggle.textContent = '選單 ＋';
+      }
+    });
+  }
 
   /* ---- 履歷 placeholder：明確告知尚未提供 ---- */
   function resumeNotice(e){
