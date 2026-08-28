@@ -7,7 +7,15 @@ export function inline(str = '') {
   return esc.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
 }
 
-// 把 CMS 多行文字轉為段落 HTML：
+// 從各種 YouTube 網址取出影片 ID
+//  支援 watch?v=、youtu.be/、/embed/、/shorts/，以及直接填 11 碼 ID
+export function youtubeId(url = '') {
+  const s = String(url).trim();
+  if (!s) return '';
+  if (/^[\w-]{11}$/.test(s)) return s;
+  const m = s.match(/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([\w-]{11})/);
+  return m ? m[1] : '';
+}
 //  - 空行（一個以上）= 分段，各自包成 <p>
 //  - 段落內單一換行 = <br>
 //  - 一併支援 **粗體**（沿用 inline 的逸出邏輯，安全）
