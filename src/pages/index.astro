@@ -106,7 +106,7 @@ const { hero, about, footer, brandZh, brandEn } = site;
         const vid = youtubeId(p.video || (String(p.image || '').includes('youtu') ? p.image : ''));
         const num = String(i + 1).padStart(2, '0');
         return (
-        <article class={i === 0 ? 'proj proj-lead reveal' : 'proj reveal'}>
+        <article class="proj reveal">
           <p class="proj-num" aria-hidden="true">{num}</p>
           {vid
             ? <div class="proj-media yt-facade" data-yt={vid} data-title={p.imageAlt || p.title}>
@@ -141,20 +141,20 @@ const { hero, about, footer, brandZh, brandEn } = site;
                 ))}
               </div>
             )}
-            <details class="more">
-              <summary><span class="chev">▸</span> 展開背景、任務與成果</summary>
-              <div class="detail-grid">
-                <div class="dl"><h4>我的角色</h4><p>{p.roleDetail}</p></div>
-                <div class="dl"><h4>核心任務</h4><p>{p.task}</p></div>
-                <div class="dl dl-wide"><h4>執行範圍</h4>
-                  <ul>{p.scope.map((s) => <li set:html={inline(s)}></li>)}</ul>
-                </div>
-                <div class="dl dl-wide"><h4>可驗證成果</h4>
-                  <p class="result" set:html={inline(p.result)}></p>
-                </div>
-              </div>
-            </details>
           </div>
+          <details class="more">
+            <summary><span class="chev">▸</span> 展開背景、任務與成果</summary>
+            <div class="detail-grid">
+              <div class="dl"><h4>我的角色</h4><p>{p.roleDetail}</p></div>
+              <div class="dl"><h4>核心任務</h4><p>{p.task}</p></div>
+              <div class="dl dl-wide"><h4>執行範圍</h4>
+                <ul>{p.scope.map((s) => <li set:html={inline(s)}></li>)}</ul>
+              </div>
+              <div class="dl dl-wide"><h4>可驗證成果</h4>
+                <p class="result" set:html={inline(p.result)}></p>
+              </div>
+            </div>
+          </details>
         </article>
         );
       })}
