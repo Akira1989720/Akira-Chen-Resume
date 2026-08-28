@@ -2,14 +2,21 @@
 import site from '../data/site.json';
 import '../styles-global.css';
 const { seo } = site;
-const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : '/';
-const ogImage = Astro.site ? new URL(seo.ogImage, Astro.site).href : seo.ogImage;
+/* astro.config 未設 site 時的備援站點，避免 canonical / OG 輸出 'https://your-domain/' */
+const SITE_FALLBACK = 'https://kaleidoscopic-mooncake-8224f5.netlify.app';
+const base = Astro.site ?? new URL(SITE_FALLBACK);
+const canonical = new URL(Astro.url.pathname, base).href;
+const ogImage = new URL(seo.ogImage, base).href;
 ---
 <!doctype html>
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- .reveal 的進場動畫以 opacity:0 起始。這行同步標記 <html class="js">，
+       CSS 只在有 js 時才隱藏，確保 JS 被阻擋時內容仍完整可見。 -->
+  <script is:inline>document.documentElement.classList.add('js');</script>
   <title>{seo.title}</title>
   <meta name="description" content={seo.description} />
   <meta name="author" content="陳家輝 Chia-Huei Chen" />
