@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { inline, richText, youtubeId } from '../lib/inline.js';
+import { inline, richText, youtubeId, displayHtml } from '../lib/inline.js';
 import site from '../data/site.json';
 import capabilitiesData from '../data/capabilities.json';
 const capabilities = capabilitiesData.items;
@@ -39,7 +39,7 @@ const { hero, about, footer, brandZh, brandEn } = site;
       <div class="hero-grid">
         <div>
           <p class="sidenote">{hero.sidenote.split('→')[0]}<span class="arrow">→</span>{hero.sidenote.split('→')[1]}</p>
-          <h1 class="reveal">{hero.heading}</h1>
+          <h1 class="reveal" set:html={displayHtml(hero.heading)}></h1>
           <p class="hero-name reveal">{hero.name}</p>
           <div class="position reveal">
             <div class="zh">{hero.positionZh}</div>
@@ -90,7 +90,7 @@ const { hero, about, footer, brandZh, brandEn } = site;
           <article class="cap">
             <div class="cap-num">{c.num}</div>
             <div>
-              <h3>{c.title}</h3>
+              <h3 set:html={displayHtml(c.title)}></h3>
               <div class="cap-body" set:html={richText(c.body)}></div>
             </div>
           </article>
@@ -130,7 +130,7 @@ const { hero, about, footer, brandZh, brandEn } = site;
               <span class="m-sep" aria-hidden="true">／</span>
               <span class="m-role">{p.role}</span>
             </p>
-            <h3>{p.title}</h3>
+            <h3 set:html={displayHtml(p.title)}></h3>
             <p class="proj-summary">{p.summary}</p>
             {p.impact && p.impact.length > 0 && (
               <div class="impact-row">
@@ -172,7 +172,7 @@ const { hero, about, footer, brandZh, brandEn } = site;
             <div class="yr">{m.year}</div>
             <div class="mx-body">
               <div class="mx-text">
-                <h3>{m.title}</h3>
+                <h3 set:html={displayHtml(m.title)}></h3>
                 <div class="role">{m.role}</div>
                 <p>{m.body}</p>
               </div>
@@ -197,7 +197,7 @@ const { hero, about, footer, brandZh, brandEn } = site;
           <div class="tl-row">
             <div class="tl-yr">{e.year}</div>
             <div>
-              <h3 class="tl-title">{e.title}</h3>
+              <h3 class="tl-title" set:html={displayHtml(e.title)}></h3>
               <p class="tl-org">{e.org}</p>
               <p>{e.body}</p>
             </div>
@@ -243,7 +243,7 @@ const { hero, about, footer, brandZh, brandEn } = site;
         <div class="edu-row">
           <div class="yr">{ed.year}</div>
           <div>
-            <h3 class="t">{ed.title}</h3>
+            <h3 class="t" set:html={displayHtml(ed.title)}></h3>
             {ed.sub && <div class="s">{ed.sub}</div>}
           </div>
         </div>
@@ -255,7 +255,7 @@ const { hero, about, footer, brandZh, brandEn } = site;
   <section id="contact">
     <div class="wrap">
       <h2 class="eyebrow">Contact ／ 聯絡</h2>
-      <p class="contact-lede">{contact.lede}</p>
+      <p class="contact-lede" set:html={displayHtml(contact.lede)}></p>
       <p class="contact-sub">{contact.sub}</p>
       <div class="contact-list">
         <div class="contact-item"><span class="k">Email</span><span class="v"><a href={'mailto:' + contact.email}>{contact.email}</a></span></div>
