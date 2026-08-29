@@ -186,6 +186,17 @@
   }
   .sidenote .arrow{ color:var(--accent); }
 
+  /* ---------- 作者指定斷行 ----------
+     .hl 由 displayHtml() 產生，每一段代表作者在 CMS 裡指定的一行。
+
+     為什麼需要這個：中文大標要控制斷行位置時，若用空白鍵排版，
+     空白只是普通字元——桌機剛好斷在對的地方，換到手機寬度就變成
+     句子中間的空洞，斷行位置也完全失控。改用真正的行之後，
+     每一行都是獨立的區塊，任何螢幕寬度下斷點都與作者指定的一致；
+     單行若真的超出容器，也只會在該行內自然折行，不會產生空白孔洞。 */
+  .hl{ display:block; }
+  /* 單行標題（未指定斷行）行為與改版前完全相同，不影響既有內容 */
+
   .hero h1{
     font-family:var(--font-display);
     font-size:clamp(2.2rem, 6vw, 4.35rem);
@@ -193,8 +204,18 @@
     line-height:1.18;
     letter-spacing:-.012em;
     margin:0 0 var(--space-block);
+    /* 字數上限只在「作者未指定斷行」時才需要——它的作用是替自動折行
+       決定一行多長。一旦作者自己指定了斷行，這個上限反而會把指定好的
+       行再折一次（例如 13ch 在手機上比 7 個中文字還窄），必須讓開。 */
     max-width:13ch;
   }
+  /* 作者已指定斷行（出現兩行以上的 .hl）時解除上限，改由容器寬度決定。
+     涵蓋所有設有 ch 上限的標題，避免同一個問題在別區重演。 */
+  .hero h1:has(.hl + .hl),
+  .contact-lede:has(.hl + .hl),
+  .cap h3:has(.hl + .hl),
+  .proj h3:has(.hl + .hl),
+  .mx h3:has(.hl + .hl){ max-width:none; }
   .hero-lede{
     font-size:clamp(1.02rem,1.6vw,1.18rem);
     color:var(--ink-soft);
