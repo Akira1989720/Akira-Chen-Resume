@@ -64,7 +64,8 @@
 
   /* 重點強調 — 讓人資快速掃到的關鍵事實 */
   strong, .b{ font-weight:600; color:var(--ink); }
-  .hl{ font-weight:600; color:var(--accent); }   /* 少數最關鍵字，輔助色強調 */
+  .hl{ font-weight:600; color:var(--accent); }   /* 少數最關鍵字，輔助色強調。
+                                                   注意：此名稱已被佔用，勿用於其他用途 */
 
   /* 焦點狀態 — 鍵盤可見 */
   a:focus-visible, button:focus-visible, summary:focus-visible, .navlink:focus-visible{
@@ -187,14 +188,16 @@
   .sidenote .arrow{ color:var(--accent); }
 
   /* ---------- 作者指定斷行 ----------
-     .hl 由 displayHtml() 產生，每一段代表作者在 CMS 裡指定的一行。
+     .dline 由 displayHtml() 產生，每一段代表作者在 CMS 裡指定的一行。
+     命名注意：不可使用 .hl——該名稱已被上方的「關鍵字強調」樣式佔用，
+     撞名會讓所有標題被套上 accent 色，在深色區塊上會直接變成隱形。
 
      為什麼需要這個：中文大標要控制斷行位置時，若用空白鍵排版，
      空白只是普通字元——桌機剛好斷在對的地方，換到手機寬度就變成
      句子中間的空洞，斷行位置也完全失控。改用真正的行之後，
      每一行都是獨立的區塊，任何螢幕寬度下斷點都與作者指定的一致；
      單行若真的超出容器，也只會在該行內自然折行，不會產生空白孔洞。 */
-  .hl{ display:block; }
+  .dline{ display:block; }
   /* 單行標題（未指定斷行）行為與改版前完全相同，不影響既有內容 */
 
   .hero h1{
@@ -211,11 +214,11 @@
   }
   /* 作者已指定斷行（出現兩行以上的 .hl）時解除上限，改由容器寬度決定。
      涵蓋所有設有 ch 上限的標題，避免同一個問題在別區重演。 */
-  .hero h1:has(.hl + .hl),
-  .contact-lede:has(.hl + .hl),
-  .cap h3:has(.hl + .hl),
-  .proj h3:has(.hl + .hl),
-  .mx h3:has(.hl + .hl){ max-width:none; }
+  .hero h1:has(.dline + .dline),
+  .contact-lede:has(.dline + .dline),
+  .cap h3:has(.dline + .dline),
+  .proj h3:has(.dline + .dline),
+  .mx h3:has(.dline + .dline){ max-width:none; }
   .hero-lede{
     font-size:clamp(1.02rem,1.6vw,1.18rem);
     color:var(--ink-soft);
