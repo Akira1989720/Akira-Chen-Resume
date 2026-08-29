@@ -36,7 +36,7 @@ collections:
             collapsed: false   # 預設展開，避免 CTA 等欄位被摺疊起來找不到
             fields:
               - { label: "側註（用 → 分隔）", name: "sidenote", widget: "string" }
-              - { label: "主標題", name: "heading", widget: "string" }
+              - { label: "主標題", name: "heading", widget: "text", hint: "要換行的地方直接按 Enter。請勿用空白鍵排版——空白在手機上會變成句子中間的空洞，斷行位置也會跑掉。" }
               - { label: "姓名", name: "name", widget: "string" }
               - { label: "定位（中）", name: "positionZh", widget: "string" }
               - { label: "定位（英）", name: "positionEn", widget: "string" }
@@ -184,7 +184,7 @@ collections:
         label: "聯絡"
         file: "src/data/contact.json"
         fields:
-          - { label: "邀請語", name: "lede", widget: "text" }
+          - { label: "邀請語", name: "lede", widget: "text", hint: "要換行的地方直接按 Enter。請勿用空白鍵排版。" }
           - { label: "補充說明", name: "sub", widget: "text" }
           - { label: "Email", name: "email", widget: "string" }
           - { label: "LinkedIn 網址", name: "linkedin", widget: "string" }
