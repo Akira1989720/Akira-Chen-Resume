@@ -19,6 +19,8 @@ export function inline(str = '') {
 //   2. 全形空白 U+3000（舊內容沿用，不必重打）
 //   3. 連續兩個以上的半形空白
 // 回傳已逸出並處理過 **粗體** 的字串陣列，每個元素為一行。
+// 注意：輸出的 class 為 .dline（display line）。切勿改用 .hl——
+// .hl 已被既有的「關鍵字強調」樣式佔用，撞名會讓標題被套上強調色。
 export function displayLines(str = '') {
   return String(str)
     .replace(/\r\n?/g, '\n')
@@ -31,7 +33,7 @@ export function displayLines(str = '') {
 // 直接產出可餵給 set:html 的字串，省去每個呼叫點重複 map/join
 export function displayHtml(str = '') {
   return displayLines(str)
-    .map((line) => `<span class="hl">${line}</span>`)
+    .map((line) => `<span class="dline">${line}</span>`)
     .join('');
 }
 //  支援 watch?v=、youtu.be/、/embed/、/shorts/，以及直接填 11 碼 ID
